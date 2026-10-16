@@ -212,13 +212,19 @@ def action(layout, text, value, icon='NONE'):
 class PanelContents:
     def draw(self, context):
         layout = self.layout
-        data = model.root()
-        board = model.active_board()
+        # draw() is read-only in Blender. A fresh file can have no data (or a
+        # retained but empty container); initialize only from an operator.
         row = layout.row(align=True)
         row.operator("layz_agentkit.open_moodboard", icon='IMAGE')
         if canvas.state(context.area):
             action(row, "", "CLOSE_BOARD", 'X')
         action(layout, "Copy Agent Instructions", "COPY_INSTRUCTIONS", 'COPYDOWN')
+        data = model.root(create=False)
+        board = model.active_board(create=False)
+        if data is None or board is None or not any(b.global_board for b in data.boards):
+            layout.label(text="Open a moodboard to start.", icon='INFO')
+            layout.label(text="Save .blend before importing references.")
+            return
         layout.template_list("LAZ_UL_boards", "", data, "boards", data, "active_board", rows=3)
         row = layout.row(align=True)
         action(row, "New board", "NEW_BOARD", 'ADD')

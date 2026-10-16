@@ -8,6 +8,10 @@ from pathlib import Path
 import sys
 import time
 import bpy
+import addon_utils
+for installed in list(bpy.context.preferences.addons.keys()):
+    if installed.rsplit('.', 1)[-1] == 'layz_agentkit':
+        addon_utils.disable(installed, default_set=False)
 
 repo = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(repo))

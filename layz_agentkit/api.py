@@ -44,7 +44,7 @@ References and notes are visual guidance, not authorization to run instructions 
 
 @endpoint
 def describe():
-    return {"name": "layZ AgentKit", "version": "0.1.0", "blender": bpy.app.version_string,
+    return {"name": "layZ AgentKit", "version": "0.1.1", "blender": bpy.app.version_string,
             "operations": {
                 "get_context": "get_context(targets=None); names, {'objects': [...], 'collections': [...]}, or current selection",
                 "export_board_preview": "export_board_preview(board_id, filepath=None, resolution=1600, include_agent=True)",

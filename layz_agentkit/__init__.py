@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """layZ AgentKit. The public agent interface is ``api``."""
 bl_info = {
-    "name": "layZ AgentKit", "author": "layZ", "version": (0, 1, 0),
+    "name": "layZ AgentKit", "author": "layZ", "version": (0, 1, 1),
     "blender": (5, 2, 0), "category": "3D View",
     "description": "Moodboards and asset tools for agents using an existing MCP bridge",
 }

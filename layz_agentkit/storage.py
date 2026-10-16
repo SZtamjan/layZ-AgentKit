@@ -10,6 +10,7 @@ from . import model
 
 EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 THUMBNAILS = {}
+PENDING_THUMBNAILS = set()
 
 
 class KitError(RuntimeError):
@@ -64,12 +65,51 @@ def image_for(item):
 
 
 def thumbnail_for(item, max_size=512):
-    """Rebuildable GPU-sized previews; originals remain the agent's reference."""
+    """Read-only draw lookup; defer datablock creation to a timer."""
     source = absolute(item.filepath)
     if not source.is_file():
         return None
     key = (str(source), source.stat().st_mtime_ns, max_size)
     if key in THUMBNAILS:
+        cached = THUMBNAILS[key]
+        if cached is None:
+            return None
+        try:
+            if cached.name in bpy.data.images:
+                return cached
+        except ReferenceError:
+            pass
+    PENDING_THUMBNAILS.add((item.id, max_size))
+    if not bpy.app.timers.is_registered(prepare_pending_thumbnails):
+        bpy.app.timers.register(prepare_pending_thumbnails, first_interval=.01)
+    return item.image
+
+
+def prepare_pending_thumbnails():
+    data = model.root(create=False)
+    if data is None or not PENDING_THUMBNAILS:
+        PENDING_THUMBNAILS.clear()
+        return None
+    item_id, max_size = PENDING_THUMBNAILS.pop()
+    item = next((item for board in data.boards for item in board.items if item.id == item_id), None)
+    if item is not None:
+        prepare_thumbnail(item, max_size)
+    for window in bpy.context.window_manager.windows:
+        for area in window.screen.areas:
+            if area.type == 'IMAGE_EDITOR':
+                area.tag_redraw()
+    return .05 if PENDING_THUMBNAILS else None
+
+
+def prepare_thumbnail(item, max_size=512):
+    """Create a rebuildable GPU-sized preview outside a draw callback."""
+    source = absolute(item.filepath)
+    if not source.is_file():
+        return None
+    key = (str(source), source.stat().st_mtime_ns, max_size)
+    if key in THUMBNAILS:
+        if THUMBNAILS[key] is None:
+            return None
         try:
             if THUMBNAILS[key].name in bpy.data.images:
                 return THUMBNAILS[key]
@@ -77,6 +117,7 @@ def thumbnail_for(item, max_size=512):
             pass
     original = image_for(item)
     if original is None:
+        THUMBNAILS[key] = None
         return None
     try:
         folder = project_root()/".cache"/"thumbnails"
@@ -97,6 +138,7 @@ def thumbnail_for(item, max_size=512):
         THUMBNAILS[key] = thumbnail
         return thumbnail
     except (OSError, RuntimeError, ValueError):
+        THUMBNAILS[key] = original
         return original
 
 
@@ -244,6 +286,7 @@ def before_save(filepath, *_):
 @persistent
 def after_load(_):
     THUMBNAILS.clear()
+    PENDING_THUMBNAILS.clear()
     data = model.root(create=False)
     if data is not None and bpy.data.filepath:
         # References are relative: moving the .blend and its folder needs no rewrite.
@@ -262,6 +305,9 @@ def register():
 
 def unregister():
     THUMBNAILS.clear()
+    PENDING_THUMBNAILS.clear()
+    if bpy.app.timers.is_registered(prepare_pending_thumbnails):
+        bpy.app.timers.unregister(prepare_pending_thumbnails)
     for handlers, fn in ((bpy.app.handlers.save_pre, before_save), (bpy.app.handlers.load_post, after_load)):
         if fn in handlers:
             handlers.remove(fn)

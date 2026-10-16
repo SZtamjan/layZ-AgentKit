@@ -1,28 +1,15 @@
-# layZ AgentKit 0.1.0
+# layZ AgentKit 0.1.1
 
-Free, open-source tools for AI agents working in Blender: visual reference boards, model inspection, consistent previews and verified static asset export to Unity.
+Fixes the empty AgentKit panel encountered when opening the extension for the first time. The panel now always shows **Open Moodboard**, and initialization happens when you click it. Thumbnail preparation also runs outside drawing callbacks, so references continue to display after saving.
 
-## Download and install
+## Install or update
 
-Download **`layz_agentkit-0.1.0.zip`** from **Assets** below. Keep it zipped. GitHub's automatic **Source code** archives are not the installable extension package.
+Download **`layz_agentkit-0.1.1.zip`** from **Assets** below and leave it zipped. In Blender choose **Edit → Preferences → Get Extensions → menu → Install from Disk**, select the ZIP and enable **layZ AgentKit**. Existing users can install over 0.1.0. Your project boards and reference folders remain separate from the installed extension.
 
-In Blender open **Edit → Preferences → Get Extensions → menu → Install from Disk**, select the ZIP and enable **layZ AgentKit**. Open the **N sidebar → AgentKit → Open Moodboard**. Save your `.blend` before adding references.
+Press **N → AgentKit → Open Moodboard**. Save your `.blend`, then use **Add images** or **Paste / Ctrl+V**. See the [README](https://github.com/SZtamjan/layZ-AgentKit#readme) for board controls, agent integration and Unity import instructions.
 
-Use **Copy Agent Instructions** to tell your agent how to read the board through your existing Blender MCP connection. A model provider or MCP server is not bundled.
+**Verification:** 42 Blender integration checks and 17 interactive checks, including actual panel drawing before initialization, an empty metadata container, Undo/Redo, and thumbnails after saving. The package is checked against source and validated by Blender's extension validator. Tested with Blender 5.2.2 LTS on Windows.
 
-## Included
-
-- Image/notes moodboard with groups, object/collection assignments and Windows clipboard paste.
-- Agent API with reference context, revisions and separately marked feedback.
-- Geometry/UV/texture diagnostics, six preview views and box-fitting checks.
-- Versioned FBX packages with existing textures, preview, report and independent Blender reimport validation.
-
-**Requirements:** Windows and Blender 5.2 or newer. Tested on Blender **5.2.2 LTS**. Unity is optional; sample exports were checked in **Unity 6000.3.23f1**. No additional Python packages are needed.
-
-**Verification:** 42 Blender integration checks, 9 interactive UI/Undo checks, Windows clipboard import, a full existing-MCP round trip and 9 Unity import assertions. Package metadata is validated by Blender's extension validator. `SHA256SUMS.txt` provides the ZIP checksum.
-
-**First-release scope:** static meshes; no rig/animation support, exact collision testing, procedural texture baking or automatic Unity materials.
+The optional [agent skill](https://github.com/SZtamjan/layZ-AgentKit/tree/main/skills/layz-agentkit) is available separately in the repository. API 1.0 remains compatible.
 
 **License:** GPL-3.0-or-later. Free to use; no payment or credits in your games/models are requested. Redistribution of the extension code remains subject to GPL requirements.
-
-See the [README](https://github.com/SZtamjan/layZ-AgentKit#readme) for full installation, controls, Unity import and API examples.

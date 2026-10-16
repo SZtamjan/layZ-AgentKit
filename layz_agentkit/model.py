@@ -102,9 +102,9 @@ def root(create=True):
     return data
 
 
-def active_board():
-    data = root()
-    if not data.boards:
+def active_board(create=True):
+    data = root(create=create)
+    if data is None or not data.boards:
         return None
     return data.boards[min(max(data.active_board, 0), len(data.boards) - 1)]
 

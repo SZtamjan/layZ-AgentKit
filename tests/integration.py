@@ -6,6 +6,10 @@ import sys
 import traceback
 from unittest import mock
 import bpy
+import addon_utils
+for installed in list(bpy.context.preferences.addons.keys()):
+    if installed.rsplit('.', 1)[-1] == 'layz_agentkit':
+        addon_utils.disable(installed, default_set=False)
 from mathutils import Vector
 
 REPO = Path(__file__).resolve().parents[1]

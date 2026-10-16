@@ -14,7 +14,7 @@ Put images and notes on a moodboard inside Blender. Your agent reads the referen
 - **Visual checks:** six consistent model views and a bounding-box fit check.
 - **Unity delivery:** FBX, existing image textures, preview and report, with a separate Blender process verifying the exported geometry and scale.
 
-Version **0.1.0** is intended for **static meshes**. It has been tested with **Blender 5.2.2 LTS on Windows**; sample FBX packages were also imported and checked in **Unity 6000.3.23f1**.
+Version **0.1.1** is intended for **static meshes**. It has been tested with **Blender 5.2.2 LTS on Windows**; sample FBX packages were also imported and checked in **Unity 6000.3.23f1**.
 
 ## Requirements
 
@@ -29,7 +29,7 @@ There are no additional Python packages, AI API keys or paid services required b
 
 ## Install and start
 
-1. Open **[Releases](https://github.com/SZtamjan/layZ-AgentKit/releases/latest)** and expand **Assets**. Download **`layz_agentkit-0.1.0.zip`**. Leave it zipped. The automatic **Source code (zip/tar.gz)** downloads are the repository source, not the installable extension.
+1. Open **[Releases](https://github.com/SZtamjan/layZ-AgentKit/releases/latest)** and expand **Assets**. Download **`layz_agentkit-0.1.1.zip`**. Leave it zipped. The automatic **Source code (zip/tar.gz)** downloads are the repository source, not the installable extension.
 2. In Blender choose **Edit → Preferences → Get Extensions → menu in the upper-right → Install from Disk**. Select the downloaded ZIP and enable **layZ AgentKit**. If it is installed but disabled, enable it under **Preferences → Add-ons**.
 3. Open the 3D View sidebar with **N**, then the **AgentKit** tab.
 4. Save your `.blend` before adding images. Split the editor first if you want the model beside the board, then click **Open Moodboard**.
@@ -51,6 +51,7 @@ There are no additional Python packages, AI API keys or paid services required b
 ### Common questions
 
 - **No AgentKit tab:** check that the extension is enabled, put the pointer over a 3D View or Image Editor, press **N**, and select **AgentKit** in the sidebar.
+- **AgentKit panel is empty:** update to 0.1.1 or newer. Version 0.1.0 could fail to initialize a board while drawing the panel.
 - **Adding references asks for a saved project:** save the `.blend` first so the extension knows where to keep managed reference copies.
 - **The agent cannot see the board:** paste **Copy Agent Instructions** into its chat. It must call the API and open the returned image paths; the board is not automatically sent to the chat.
 - **Missing images after moving a project:** move the matching `_agentkit` folder alongside the `.blend`, or use **Relink image** in the sidebar.
@@ -61,7 +62,7 @@ The extension runs locally. It does not connect to an AI provider, create a chat
 
 ## Optional agent skill
 
-The repository includes a **[layz-agentkit skill](skills/layz-agentkit/SKILL.md)** for agents using the installed add-on. It covers reading the right boards, opening reference images, checking models and previews, appending feedback and verifying a requested export. It supports add-on 0.1.0 / API 1.0 through your existing connection.
+The repository includes a **[layz-agentkit skill](skills/layz-agentkit/SKILL.md)** for agents using the installed add-on. It covers reading the right boards, opening reference images, checking models and previews, appending feedback and verifying a requested export. It supports add-on 0.1.x / API 1.0 through your existing connection.
 
 Copy the **entire `skills/layz-agentkit` folder** from this repository into one of Codex's skill locations:
 
@@ -158,7 +159,7 @@ The runtime uses Blender's bundled Python, GPU and rendering APIs. Windows clipb
 # Run from a cloned source repository. Replace this with your Blender executable.
 $blender = 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe'
 python tools/build.py
-& $blender --command extension validate .\dist\layz_agentkit-0.1.0.zip
+& $blender --command extension validate .\dist\layz_agentkit-0.1.1.zip
 & $blender --background --factory-startup --threads 4 --python-exit-code 1 --python tests/integration.py
 & $blender --enable-event-simulate --threads 4 --python tests/interactive.py
 ```

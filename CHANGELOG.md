@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.1.1 — 2026-10-16
+
+- Fix the empty sidebar on first use or when a file contains an empty AgentKit metadata container. Panel drawing is read-only; opening the moodboard initializes its data.
+- Build thumbnail caches outside draw callbacks, including after saving a project.
+- Add regression checks for actual first-use panel drawing, empty metadata, opening the first board and rendering references after saving. Isolate source tests from an installed copy of the extension.
 
 - Add an optional `layz-agentkit` agent skill, with moodboard/verification guidance, API examples and installation instructions. Compatible with the existing 0.1.0 add-on; distributed as a repository folder separately from the Blender extension ZIP.
 

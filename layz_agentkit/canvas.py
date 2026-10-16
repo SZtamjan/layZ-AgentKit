@@ -47,8 +47,8 @@ def selected_items(board):
 
 
 def shown(board):
-    data = model.root()
-    return [i for i in board.items if data.show_agent or i.author == "USER"]
+    data = model.root(create=False)
+    return [i for i in board.items if data is None or data.show_agent or i.author == "USER"]
 
 
 def fit_view(view, board, region):
@@ -91,7 +91,7 @@ def draw():
     view = state(area)
     if view is None:
         return
-    board = model.active_board()
+    board = model.active_board(create=False)
     region = bpy.context.region
     if board is None:
         return
@@ -188,9 +188,9 @@ class LAZ_OT_canvas(bpy.types.Operator):
         if context.area.type != 'IMAGE_EDITOR':
             context.area.type = 'IMAGE_EDITOR'
         key = context.area.as_pointer()
+        model.root()
         if key in SESSIONS:
             return {'FINISHED'}
-        model.root()
         view = View(context.area, context.window)
         SESSIONS[key] = view
         self.key = key

@@ -1,6 +1,6 @@
 schema_version = "1.0.0"
 id = "layz_agentkit"
-version = "0.1.0"
+version = "0.1.1"
 name = "layZ AgentKit"
 tagline = "Visual references, inspection and delivery tools for agents"
 maintainer = "layZ"
