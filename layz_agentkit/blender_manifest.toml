@@ -1,0 +1,13 @@
+schema_version = "1.0.0"
+id = "layz_agentkit"
+version = "0.1.0"
+name = "layZ AgentKit"
+tagline = "Visual references, inspection and delivery tools for agents"
+maintainer = "layZ"
+type = "add-on"
+blender_version_min = "5.2.0"
+license = ["SPDX:GPL-3.0-or-later"]
+tags = ["3D View", "Import-Export", "Pipeline"]
+[permissions]
+files = "Import references, save previews and export asset packages"
+clipboard = "Paste reference images and copy agent instructions"

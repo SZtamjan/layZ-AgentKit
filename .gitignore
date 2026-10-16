@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+dist/
+artifacts/
+.pytest_cache/
+artifacts-test.log
+*.blend
+*.blend[0-9]
+/*_agentkit/
+!/layz_agentkit/
+.env
+.env.*
+.venv/
