@@ -59,6 +59,19 @@ There are no additional Python packages, AI API keys or paid services required b
 
 The extension runs locally. It does not connect to an AI provider, create a chat, download references or execute text found in references.
 
+## Optional agent skill
+
+The repository includes a **[layz-agentkit skill](skills/layz-agentkit/SKILL.md)** for agents using the installed add-on. It covers reading the right boards, opening reference images, checking models and previews, appending feedback and verifying a requested export. It supports add-on 0.1.0 / API 1.0 through your existing connection.
+
+Copy the **entire `skills/layz-agentkit` folder** from this repository into one of Codex's skill locations:
+
+- `<your-project>/.agents/skills/layz-agentkit` for one project;
+- `~/.agents/skills/layz-agentkit` for all projects (Windows: `%USERPROFILE%\.agents\skills\layz-agentkit`).
+
+Codex normally detects the new skill automatically; restart it if it does not appear. Invoke **`$layz-agentkit`** in Codex CLI/IDE, or select the skill from the skill picker in the desktop app. Example request: "Use layz-agentkit to inspect the selected shelf against its moodboard and prepare a Unity export under 2,000 triangles."
+
+Other agents that support `SKILL.md` can use the same folder in their own skill location. Install the Blender extension separately; a skill supplies workflow instructions and does not install the add-on or connect MCP. See [OpenAI's skill documentation](https://learn.chatgpt.com/docs/build-skills) for discovery and invocation details.
+
 ## Working with references
 
 **Project style** applies to every asset in the file. Create additional boards and assign objects or collections for more specific references. Nested collections and multiple collection memberships are supported; renaming targets preserves their bindings. Every board and entry has a stable ID and revision.

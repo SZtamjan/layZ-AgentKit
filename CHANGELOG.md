@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add an optional `layz-agentkit` agent skill, with moodboard/verification guidance, API examples and installation instructions. Compatible with the existing 0.1.0 add-on; distributed as a repository folder separately from the Blender extension ZIP.
+
 ## 0.1.0 — 2026-10-16
 
 First public release of layZ AgentKit for Blender 5.2 on Windows.
